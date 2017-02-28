@@ -95,7 +95,6 @@ public class Menu extends javax.swing.JFrame {
 
     
      public static String getString(String metodo, RequestBody formBody) {
-
         try {
             URL url = new URL("http://localhost:5000/" + metodo);
             Request request = new Request.Builder().url(url).post(formBody).build();
@@ -109,7 +108,6 @@ public class Menu extends javax.swing.JFrame {
         }
         return null;
     }
-     
      
      public static String otroMetood(String metodo, RequestBody formBody){
      
