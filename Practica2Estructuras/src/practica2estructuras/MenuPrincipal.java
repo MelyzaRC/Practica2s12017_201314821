@@ -1,4 +1,3 @@
-
 package practica2estructuras;
 
 import javax.swing.JOptionPane;
@@ -43,6 +42,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(0, 153, 204));
         jButton2.setText("Pila");
         jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setForeground(new java.awt.Color(51, 153, 0));
         jButton3.setText("Cola");
@@ -122,19 +126,23 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    PantallaLista p = new PantallaLista();
-    p.setVisible(true);
-    this.setVisible(false);
+        PantallaLista p = new PantallaLista();
+        p.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-PantallaCola pc = new PantallaCola();
-pc.setVisible(true);// TODO add your handling code here:
+        PantallaCola pc = new PantallaCola();
+        pc.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    
-    
-    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        PantallaPila pp = new PantallaPila();
+        pp.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
