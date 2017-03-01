@@ -6,6 +6,7 @@
 package practica2estructuras;
 
 import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
@@ -19,8 +20,6 @@ import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
-import static practica2estructuras.Menu.getString;
-import static practica2estructuras.Menu.webClient;
 
 /**
  *
@@ -28,34 +27,32 @@ import static practica2estructuras.Menu.webClient;
  */
 public class PantallaLista extends javax.swing.JFrame {
 
+    public static OkHttpClient webClient = new OkHttpClient();
+
     /**
      * Creates new form PantallaLista
      */
-    public PantallaLista(){
+    public PantallaLista() {
         initComponents();
         setLocationRelativeTo(null);
-        jTextField2.addKeyListener(new KeyAdapter()
-{
-   public void keyTyped(KeyEvent e)
-   {
-      char caracter = e.getKeyChar();
+        jTextField2.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char caracter = e.getKeyChar();
 
-      // Verificar si la tecla pulsada no es un digito
-      if(((caracter < '0') ||
-         (caracter > '9')) &&
-         (caracter != '\b' /*corresponde a BACK_SPACE*/))
-      {
-         e.consume();  // ignorar el evento de teclado
-      }
-   }
-});
-   
+                // Verificar si la tecla pulsada no es un digito
+                if (((caracter < '0')
+                        || (caracter > '9'))
+                        && (caracter != '\b' /*corresponde a BACK_SPACE*/)) {
+                    e.consume();  // ignorar el evento de teclado
+                }
+            }
+        });
+
     }
 
-    
     //Metodos
-    public String AddLista(String metodo, RequestBody formBody){
-    try {
+    public String metodoWS(String metodo, RequestBody formBody) {
+        try {
             URL url = new URL("http://localhost:5000/" + metodo);
             Request request = new Request.Builder().url(url).post(formBody).build();
             Response response = webClient.newCall(request).execute();//Aqui obtiene la respuesta en dado caso si hayas pues un return en python
@@ -68,10 +65,7 @@ public class PantallaLista extends javax.swing.JFrame {
         }
         return null;
     }
-    
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -188,49 +182,38 @@ public class PantallaLista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-    MenuPrincipal p = new MenuPrincipal();
-    p.setVisible(true);
-    this.setVisible(false);
+        MenuPrincipal p = new MenuPrincipal();
+        p.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     String palabra = jTextField1.getText();
+        String nombre = jTextField1.getText();
         RequestBody formBody = new FormEncodingBuilder()
-                .add("palabra", palabra)
-                .add("busqueda", "0")
-                .add("eliminacion", "0")
+                .add("palabra", nombre)
                 .build();
-        String r =AddLista("addLista", formBody); 
-        JOptionPane.showMessageDialog(this, r, "Resultado", JOptionPane.INFORMATION_MESSAGE);
+        String r = "Respuesta del método: " + metodoWS("insertarLista", formBody);
+        String x = metodoWS("recorrerLista", formBody);
         System.out.println(r);
+        System.out.println(x);
         jTextField1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        String criterio = jTextField3.getText().toString();
-        RequestBody formBody = new FormEncodingBuilder()
-                .add("palabra", "a")
-                .add("busqueda", criterio)
-                .add("eliminacion", "0")
-                .build();
-        String r =AddLista("buscarLista", formBody); 
-        JOptionPane.showMessageDialog(this, r, "Resultado", JOptionPane.INFORMATION_MESSAGE);
-        System.out.println(r);
-        jTextField3.setText("");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    String eliminar = jTextField2.getText().toString();
+        String nombre = "no aplica";
         RequestBody formBody = new FormEncodingBuilder()
-                .add("palabra", "a")
-                .add("busqueda", "0")
-                .add("eliminacion", eliminar)
+                .add("palabra", nombre)
+                .add("eliminacion", jTextField2.getText())
                 .build();
-        String r =AddLista("eliminarLista", formBody); 
-        JOptionPane.showMessageDialog(this, r, "Resultado", JOptionPane.INFORMATION_MESSAGE);
+        String r = metodoWS("eliminarLista", formBody);
+         String x = metodoWS("recorrerLista", formBody);
         System.out.println(r);
         jTextField2.setText("");
+        System.out.println(x);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
