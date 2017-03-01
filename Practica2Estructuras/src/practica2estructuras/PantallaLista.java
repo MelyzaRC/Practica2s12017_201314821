@@ -192,7 +192,7 @@ public class PantallaLista extends javax.swing.JFrame {
         RequestBody formBody = new FormEncodingBuilder()
                 .add("palabra", nombre)
                 .build();
-        String r = "Respuesta del método: " + metodoWS("insertarLista", formBody);
+        String r = metodoWS("insertarLista", formBody);
         String x = metodoWS("recorrerLista", formBody);
         System.out.println(r);
         System.out.println(x);
@@ -200,7 +200,17 @@ public class PantallaLista extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
+        String criterio = jTextField3.getText();
+        RequestBody formBody = new FormEncodingBuilder()
+                .add("palabra", "no aplica")
+                .add("eliminacion", "no aplica")
+                .add("busqueda", criterio)
+                .build();
+        String r = metodoWS("buscarLista", formBody);
+        String x = metodoWS("recorrerLista", formBody);
+        System.out.println(r);
+        jTextField3.setText("");
+        System.out.println(x);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -210,7 +220,7 @@ public class PantallaLista extends javax.swing.JFrame {
                 .add("eliminacion", jTextField2.getText())
                 .build();
         String r = metodoWS("eliminarLista", formBody);
-         String x = metodoWS("recorrerLista", formBody);
+        String x = metodoWS("recorrerLista", formBody);
         System.out.println(r);
         jTextField2.setText("");
         System.out.println(x);
