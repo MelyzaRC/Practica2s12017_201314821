@@ -47,6 +47,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jButton3.setForeground(new java.awt.Color(51, 153, 0));
         jButton3.setText("Cola");
         jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setForeground(new java.awt.Color(255, 0, 102));
         jButton4.setText("Matriz dispersa");
@@ -121,6 +126,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
     p.setVisible(true);
     this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+PantallaCola pc = new PantallaCola();
+pc.setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     
     

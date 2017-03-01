@@ -9,6 +9,9 @@ class Nodo:
 		self.palabra=palabra
 		self.siguiente=None
 
+
+
+##ListaSimple
 class listaSimple:
 	def __init__(self):
 		self.primero =None
@@ -97,7 +100,53 @@ class listaSimple:
 		else:
 			return "Elemento encontrado en la posicion: " + str(cb1) 		
 
+
+##Pila
+class Cola:
+	def __init__(self):
+		self.primero =None
+		self.ultimo = None
+
+	def vacia(self):
+		if self.primero == None:
+			return True
+		else:
+			return False
+
+	def agregar(self, dato):
+   	 if self.vacia() == True:
+   	 	self.primero = self.ultimo = Nodo(dato)
+   	 	return "Agregado: " + str(dato)
+   	 else:
+   	 	temp = Nodo(dato)
+   	 	self.ultimo.siguiente = temp
+   	 	self.ultimo = temp
+   	 	return "Agregado: " + str(dato)
+
+	def recorrer(self):
+		ai1 = self.primero
+		if self.vacia() == True:
+			return "La cola esta vacia"
+		else:
+			s = ""
+			while ai1 != None:
+				s = s + "Elemento: " + ai1.palabra + "\n"
+				ai1 = ai1.siguiente
+		return s
+
+	def sacar(self):
+		if self.vacia() == True:
+			return "La cola está vacía"
+		else:
+			tm = self.primero
+			ai2 = self.primero.siguiente 
+			self.primero =None
+			self.primero = ai2
+			return "Elemento saliente: " + tm.palabra
+
+
 lis = listaSimple()
+co = Cola()
 
 @app.route('/insertarLista',methods=['POST']) 
 def insertarLista():
@@ -116,6 +165,18 @@ def eliminarLista():
 @app.route('/buscarLista', methods=['POST'])
 def buscarLista():
 	return lis.buscar(request.form['busqueda'])
+
+
+
+@app.route('/addCola', methods=['POST'])
+def addCola():
+	return co.agregar(request.form['valor'])
+@app.route('/recorrerCola', methods=['POST'])
+def recorrerCola():
+	return co.recorrer()
+@app.route('/sacarCola', methods=['POST'])
+def sacarCola():
+	return co.sacar()
 
 
 if __name__ == "__main__":
