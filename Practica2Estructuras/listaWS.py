@@ -190,9 +190,55 @@ class Pila:
 
 
 
+class NodoMatriz:
+	def __init__(self, contenido):
+		self.contenifo=contenido
+		self.pContenido = None
+		self.uContenido = None
+		self.siguiente=None
+		self.anterior =None
+		self.arriba = None
+		self.abajo = None
+		self.adelante = None
+		self.atras = None
+
+class matrizDispersa:
+	def __init__(self):
+		self.primerDominio =None
+		self.ultimoDominio = None
+		self.primeraLetra = None
+		self.ultimaLetra = None
+
+	def vacia(self):
+		if self.primerDominio == None:
+			return True
+		else:
+			return False
+
+	def ingresarCorreo(self, correo1, dominio1, letra1):
+		if self.vacia():
+			temp = Nodo(correo1)
+			self.primerDominio = self.ultimoDominio = NodoMatriz(dominio1)
+			self.primeraLetra = self.ultimaLetra = NodoMatriz(letra1)
+			self.primeraLetra.siguiente = self.ultimaLetra.siguiente = self.primerDominio.abajo = self.ultimoDominio.abajo = temp
+			temp.arriba = self.primerDominio = self.ultimoDominio
+			temp.anterior = self.primeraLetra = self.ultimaLetra
+			return "Correo ingresado"
+		else:
+			return "La primera posicion de la matriz dispersa esta llena"
+
 lis = listaSimple()
 co = Cola()
 pi = Pila()
+md = matrizDispersa()
+
+@app.route('/insertarMatrizDispersa',methods=['POST']) 
+def insertarMatrizDispersa():
+	correoTemp= str(request.form['correo'])
+	dominioTemp = str(request.form['dominio'])
+	letraTemp = str(request.form['letra'])
+	return md.ingresarCorreo(correoTemp, dominioTemp, letraTemp)
+
 
 @app.route('/insertarLista',methods=['POST']) 
 def insertarLista():

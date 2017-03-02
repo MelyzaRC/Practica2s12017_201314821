@@ -60,6 +60,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jButton4.setForeground(new java.awt.Color(255, 0, 102));
         jButton4.setText("Matriz dispersa");
         jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica2s12017_201314821\\Practica2Estructuras\\Lista.png")); // NOI18N
 
@@ -142,6 +147,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         pp.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    PantallaMatrizDispersa pmd = new PantallaMatrizDispersa();
+    pmd.setVisible(true);
+    this.setVisible(false);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
