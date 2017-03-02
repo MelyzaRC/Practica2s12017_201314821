@@ -218,15 +218,15 @@ public class PantallaMatrizDispersa extends javax.swing.JFrame {
 
         }
 
-        for (int i = 0; i < contadorArroba - 1; i++) {
+        for (int i = 0; i < contadorArroba; i++) {
             nombre = nombre + correo.charAt(i);
         }
         for (int i = contadorArroba + 1; i < correo.length(); i++) {
             dominio = dominio + correo.charAt(i);
         }
 
-        System.out.println("La arroba se encuentra en la posición: " + contadorArroba);
-        System.out.println("El nombre es: " + nombre + "  El dominio es: " + dominio + "  Letra: " + correo.charAt(0));
+        System.out.println("Pos@ " + contadorArroba);
+        System.out.println("Name: " + nombre + "  Domain: " + dominio + "  I: " + correo.charAt(0));
 
         if (nombre.equals("") || dominio.equals("")) {
             JOptionPane.showMessageDialog(this, "Debe ingresar un correo válido", "Estructura de Datos", JOptionPane.INFORMATION_MESSAGE);

@@ -192,9 +192,7 @@ class Pila:
 
 class NodoMatriz:
 	def __init__(self, contenido):
-		self.contenifo=contenido
-		self.pContenido = None
-		self.uContenido = None
+		self.contenido=contenido
 		self.siguiente=None
 		self.anterior =None
 		self.arriba = None
@@ -217,13 +215,13 @@ class matrizDispersa:
 
 	def ingresarCorreo(self, correo1, dominio1, letra1):
 		if self.vacia():
-			temp = Nodo(correo1)
+			temp = NodoMatriz(correo1)
 			self.primerDominio = self.ultimoDominio = NodoMatriz(dominio1)
 			self.primeraLetra = self.ultimaLetra = NodoMatriz(letra1)
 			self.primeraLetra.siguiente = self.ultimaLetra.siguiente = self.primerDominio.abajo = self.ultimoDominio.abajo = temp
 			temp.arriba = self.primerDominio = self.ultimoDominio
 			temp.anterior = self.primeraLetra = self.ultimaLetra
-			return "Correo ingresado"
+			return "Ingresado con éxito...!!\n" +"Se ingresó: " + temp.contenido + " PosArriba(Dominio)---> " + temp.arriba.contenido + " PosAnterior(Letra)--> " + temp.anterior.contenido
 		else:
 			return "La primera posicion de la matriz dispersa esta llena"
 
