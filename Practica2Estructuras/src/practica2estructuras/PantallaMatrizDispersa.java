@@ -107,6 +107,11 @@ public class PantallaMatrizDispersa extends javax.swing.JFrame {
 
         jButton3.setForeground(new java.awt.Color(255, 102, 51));
         jButton3.setText("Eliminar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jTextField3.setForeground(new java.awt.Color(0, 153, 102));
 
@@ -205,6 +210,7 @@ public class PantallaMatrizDispersa extends javax.swing.JFrame {
         String nombre = "";
         String dominio = "";
         String letra = "";
+        String numeroLe = ""; 
         int contadorArroba = 0;
         String correo = jTextField1.getText();
 
@@ -224,24 +230,122 @@ public class PantallaMatrizDispersa extends javax.swing.JFrame {
         for (int i = contadorArroba + 1; i < correo.length(); i++) {
             dominio = dominio + correo.charAt(i);
         }
-
+        letra = letra + correo.charAt(0);
+        switch (letra.toLowerCase()) {
+            case "a":
+                numeroLe = "1";
+                break;
+            case "b":
+                numeroLe = "2";
+                break;
+            case "c":
+                numeroLe = "3";
+                break;
+            case "d":
+                numeroLe = "4";
+                break;
+            case "e":
+                numeroLe = "5";
+                break;
+            case "f":
+                numeroLe = "6";
+                break;
+            case "g":
+                numeroLe = "7";
+                break;
+            case "h":
+                numeroLe = "8";
+                break;
+            case "i":
+                numeroLe = "9";
+                break;
+            case "j":
+                numeroLe = "10";
+                break;
+            case "k":
+                numeroLe = "11";
+                break;
+            case "l":
+                numeroLe = "12";
+                break;
+            case "m":
+                numeroLe = "13";
+                break;
+            case "n":
+                numeroLe = "14";
+                break;
+            case "ñ":
+                numeroLe = "15";
+                break;
+            case "o":
+                numeroLe = "16";
+                break;
+            case "p":
+                numeroLe = "17";
+                break;
+            case "q":
+                numeroLe = "18";
+                break;
+            case "r":
+                numeroLe = "19";
+                break;
+            case "s":
+                numeroLe = "20";
+                break;
+            case "t":
+                numeroLe = "21";
+                break;
+            case "u":
+                numeroLe = "22";
+                break;
+            case "v":
+                numeroLe = "23";
+                break;
+            case "w":
+                numeroLe = "24";
+                break;
+            case "x":
+                numeroLe = "25";
+                break;
+            case "y":
+                numeroLe = "26";
+                break;
+            case "z":
+                numeroLe = "27";
+                break;
+        }
         System.out.println("Pos@ " + contadorArroba);
         System.out.println("Name: " + nombre + "  Domain: " + dominio + "  I: " + correo.charAt(0));
 
         if (nombre.equals("") || dominio.equals("")) {
             JOptionPane.showMessageDialog(this, "Debe ingresar un correo válido", "Estructura de Datos", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            letra = letra +  correo.charAt(0);
+
             RequestBody formBody = new FormEncodingBuilder()
                     .add("correo", correo)
                     .add("dominio", dominio)
                     .add("letra", letra)
+                    .add("numeroLetra", numeroLe)
                     .build();
             String r = metodoWS("insertarMatrizDispersa", formBody);
+
             System.out.println(r);
+
             jTextField1.setText("");
         }
+
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        RequestBody formBody = new FormEncodingBuilder()
+                .add("correo", "")
+                .add("dominio", "")
+                .add("letra", "")
+                .add("numeroLetra", "1")
+                .build();
+        String r1 = metodoWS("recorrerMatrizDispersa", formBody);
+        System.out.println(r1);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
