@@ -53,6 +53,27 @@ public class PantallaMatrizDispersa extends javax.swing.JFrame {
         return null;
     }
 
+    
+    public void imagen() {
+        try {
+            String dotPath = "C:\\release\\bin\\dot.exe";
+            String fileInputPath = "C:\\myproject\\app\\test-output\\MatrizDispersa.dot";
+            String fileOutputPath = "C:\\myproject\\app\\test-output\\MatrizDispersa.png";
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+            Runtime rt = Runtime.getRuntime();
+            rt.exec(cmd);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+        } finally {
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -306,6 +327,7 @@ public class PantallaMatrizDispersa extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
         String nombre = "";
         String dominio = "";
         String letra = "";
@@ -431,8 +453,11 @@ public class PantallaMatrizDispersa extends javax.swing.JFrame {
             System.out.println(r);
 
             jTextField1.setText("");
-        }
+            String y = metodoWS("graficarMatriz", formBody);
+            imagen();
 
+        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

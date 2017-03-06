@@ -46,7 +46,8 @@ public class PantallaPila extends javax.swing.JFrame {
             }
         });
     }
-public void imagen() {
+
+    public void imagen() {
         try {
             String dotPath = "C:\\release\\bin\\dot.exe";
             String fileInputPath = "C:\\myproject\\app\\test-output\\Pila.dot";
@@ -66,6 +67,7 @@ public void imagen() {
         } finally {
         }
     }
+
     public String metodoWS(String metodo, RequestBody formBody) {
         try {
             URL url = new URL("http://localhost:5000/" + metodo);
@@ -182,17 +184,18 @@ public void imagen() {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String nombre = jTextField1.getText();
-          if (nombre.equals("")){
-        JOptionPane.showMessageDialog(this, "Debe ingresar un valor numérico", "Error", JOptionPane.INFORMATION_MESSAGE);    
-        }else{
-        RequestBody formBody = new FormEncodingBuilder()
-                .add("valor", nombre)
-                .build();
-        String r = metodoWS("addPila", formBody);
-        System.out.println(r);
-        jTextField1.setText(""); 
-        String y = metodoWS("graficarPila", formBody);
-        imagen();}// TODO add your handling code here:
+        if (nombre.equals("")) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un valor numérico", "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            RequestBody formBody = new FormEncodingBuilder()
+                    .add("valor", nombre)
+                    .build();
+            String r = metodoWS("addPila", formBody);
+            System.out.println(r);
+            jTextField1.setText("");
+            String y = metodoWS("graficarPila", formBody);
+            imagen();
+        }// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -202,7 +205,7 @@ public void imagen() {
                 .build();
         String r = metodoWS("sacarPila", formBody);
         System.out.println(r);
-        jTextField1.setText("");     
+        jTextField1.setText("");
         String y = metodoWS("graficarPila", formBody);
         imagen();// TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed

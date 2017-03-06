@@ -5,13 +5,12 @@ app = Flask("EDD Lista Simple")
 import subprocess
 from graphviz import Digraph
 
+#Nodo para lista pila cola
 class Nodo:
 	def __init__(self, palabra):
 		self.palabra=palabra
 		self.siguiente=None
 		self.anterior =None
-
-
 
 ##ListaSimple
 class listaSimple:
@@ -120,7 +119,6 @@ class listaSimple:
 			return "No se ha encontrado el elemento"
 		else:
 			return "Elemento encontrado en la posicion: " + str(cb1) 		
-
 
 ##Cola
 class Cola:
@@ -246,11 +244,10 @@ class Pila:
 			self.ultimo = ai2
 			return "Elemento saliente: " + tm.palabra
 
-
-
+#Nodo para la matriz
 class NodoMatriz:
 	def __init__(self, contenido, pContenido, uContenido, numeroLetra):
-		self.contenido=contenido
+		self.contenido = contenido
 		self.pContenido = pContenido
 		self.uContenido = uContenido
 		self.numeroLetra = numeroLetra
@@ -273,6 +270,87 @@ class matrizDispersa:
 			return True
 		else:
 			return False
+
+
+	def graficarMatrizDispersa(self):
+		dot = Digraph(comment = 'GraficaMatrixDispersa')
+		dot
+
+		tempDominio = self.primerDominio
+		tempLetra = self.primeraLetra
+
+		if tempDominio == None:
+			return "La matriz está vacía"
+		else:
+			if tempDominio == self.primerDominio == self.ultimoDominio:
+				dot.node(tempDominio.contenido)
+			else:
+				##Dominios
+				while tempDominio.siguiente != None:
+					dot.node(tempDominio.contenido)
+					dot.node(tempDominio.siguiente.contenido)
+					dot.edge(str(tempDominio.contenido),str(tempDominio.siguiente.contenido))
+					tempDominio = tempDominio.siguiente
+				tempDominio2 = self.ultimoDominio
+				while tempDominio2.anterior != None:
+					dot.node(tempDominio.contenido)
+					dot.node(tempDominio2.anterior.contenido)
+					dot.edge(str(tempDominio2.contenido),str(tempDominio2.anterior.contenido))
+					tempDominio2 = tempDominio2.anterior
+				##Dominios y abajo y arriba
+				Dom12 = self.primerDominio
+				while Dom12 != None:
+					tempDominio = Dom12.pContenido
+					dot.node(Dom12.contenido)
+					dot.node(tempDominio.contenido)
+					dot.edge(str(Dom12.contenido),str(tempDominio.contenido))
+					dot.edge(str(tempDominio.contenido),str(Dom12.contenido))
+					while tempDominio.abajo != None:
+						dot.node(tempDominio.contenido)
+						dot.node(tempDominio.abajo.contenido)
+						dot.edge(str(tempDominio.contenido),str(tempDominio.abajo.contenido))
+						dot.edge(str(tempDominio.abajo.contenido),str(tempDominio.contenido))
+						tempDominio = tempDominio.abajo
+					Dom12 = Dom12.siguiente
+				
+				if tempLetra == self.primeraLetra == self.ultimaLetra: 
+					dot.node(tempDominio.contenido)
+				else:
+					tempLetra = self.primeraLetra
+					while tempLetra.abajo != None:
+						dot.node(tempLetra.contenido)
+						dot.node(tempLetra.abajo.contenido)
+						dot.edge(str(tempLetra.abajo.contenido),str(tempLetra.contenido))
+						dot.edge(str(tempLetra.contenido),str(tempLetra.abajo.contenido))
+						tempLetra = tempLetra.abajo
+				Le12 = self.primeraLetra
+				while Le12 != None:
+					tempLetra = Le12.pContenido
+					dot.node(Le12.contenido)
+					dot.node(tempLetra.contenido)
+					dot.edge(str(Le12.contenido),str(tempLetra.contenido))
+					dot.edge(str(tempLetra.contenido),str(Le12.contenido))
+					while tempLetra.siguiente != None:
+						dot.node(tempLetra.contenido)
+						dot.node(tempLetra.siguiente.contenido)
+						dot.edge(str(tempLetra.contenido),str(tempLetra.siguiente.contenido))
+						dot.edge(str(tempLetra.siguiente.contenido),str(tempLetra.contenido))
+						tempLetra = tempLetra.siguiente
+					Le12 = Le12.abajo
+				Le13 = self.primeraLetra
+				while Le13 != None:
+					Le13c = Le13.pContenido
+					while Le13c.atras != None:
+						dot.node(Le13c.contenido)
+						dot.node(Le13c.atras.contenido)
+						dot.edge(str(Le13c.contenido),str(Le13c.atras.contenido))
+						dot.edge(str(Le13c.atras.contenido),str(Le13c.contenido))
+						Le13c = Le13c.atras
+					Le13 = Le13.abajo
+
+					dot.render('test-output/MatrizDispersa.dot', view=False)
+			return "Graficado"
+
 
 	def ingresarCorreo(self, correoR, dominioR, letraR, numeroR):
 		s = ""
@@ -634,11 +712,6 @@ class matrizDispersa:
 				temp1 = temp1.siguiente
 		return var
 
-	
-
-
-
-
 	def recorrerMatrizDispersa(self):
 		s = ""
 		temp1 = self.primerDominio 
@@ -663,6 +736,10 @@ def buscarDom():
 	ret = str(md.buscarDominio(str(request.form['dominio'])))
 	return ret 
 
+@app.route('/graficarMatriz',methods=['POST']) 
+def graficarMatriz():
+	ret = str(md.graficarMatrizDispersa())
+	return ret 
 
 @app.route('/buscarLetra',methods=['POST']) 
 def buscarLetra():
