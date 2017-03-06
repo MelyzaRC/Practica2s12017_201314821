@@ -271,7 +271,6 @@ class matrizDispersa:
 		else:
 			return False
 
-
 	def graficarMatrizDispersa(self):
 		dot = Digraph(comment = 'GraficaMatrixDispersa')
 		dot
@@ -284,8 +283,63 @@ class matrizDispersa:
 		else:
 			if tempDominio == self.primerDominio == self.ultimoDominio:
 				dot.node(tempDominio.contenido)
+
+				##Dominios y abajo y arriba
+				Dom12 = self.primerDominio
+				while Dom12 != None:
+					tempDominio = Dom12.pContenido
+					dot.node(Dom12.contenido)
+					dot.node(tempDominio.contenido)
+					dot.edge(str(Dom12.contenido),str(tempDominio.contenido))
+					dot.edge(str(tempDominio.contenido),str(Dom12.contenido))
+					while tempDominio.abajo != None:
+						dot.node(tempDominio.contenido)
+						dot.node(tempDominio.abajo.contenido)
+						dot.edge(str(tempDominio.contenido),str(tempDominio.abajo.contenido))
+						dot.edge(str(tempDominio.abajo.contenido),str(tempDominio.contenido))
+						tempDominio = tempDominio.abajo
+					Dom12 = Dom12.siguiente
+
+			
+				if tempLetra == self.primeraLetra == self.ultimaLetra: 
+					dot.node(tempLetra.contenido)
+				else:
+					tempLetra = self.primeraLetra
+					while tempLetra.abajo != None:
+						dot.node(tempLetra.contenido)
+						dot.node(tempLetra.abajo.contenido)
+						dot.edge(str(tempLetra.abajo.contenido),str(tempLetra.contenido))
+						dot.edge(str(tempLetra.contenido),str(tempLetra.abajo.contenido))
+						tempLetra = tempLetra.abajo
+				
+				Le12 = self.primeraLetra
+				while Le12 != None:
+					tempLetra = Le12.pContenido
+					dot.node(Le12.contenido)
+					dot.node(tempLetra.contenido)
+					dot.edge(str(Le12.contenido),str(tempLetra.contenido))
+					dot.edge(str(tempLetra.contenido),str(Le12.contenido))
+					while tempLetra.siguiente != None:
+						dot.node(tempLetra.contenido)
+						dot.node(tempLetra.siguiente.contenido)
+						dot.edge(str(tempLetra.contenido),str(tempLetra.siguiente.contenido))
+						dot.edge(str(tempLetra.siguiente.contenido),str(tempLetra.contenido))
+						tempLetra = tempLetra.siguiente
+					Le12 = Le12.abajo
+				Le13 = self.primeraLetra
+				while Le13 != None:
+					Le13c = Le13.pContenido
+					while Le13c.atras != None:
+						dot.node(Le13c.contenido)
+						dot.node(Le13c.atras.contenido)
+						dot.edge(str(Le13c.contenido),str(Le13c.atras.contenido))
+						dot.edge(str(Le13c.atras.contenido),str(Le13c.contenido))
+						Le13c = Le13c.atras
+					Le13 = Le13.abajo	
+					dot.render('test-output/MatrizDispersa.dot', view=False)
 			else:
 				##Dominios
+				tempDominio = self.primerDominio
 				while tempDominio.siguiente != None:
 					dot.node(tempDominio.contenido)
 					dot.node(tempDominio.siguiente.contenido)
@@ -314,7 +368,7 @@ class matrizDispersa:
 					Dom12 = Dom12.siguiente
 				
 				if tempLetra == self.primeraLetra == self.ultimaLetra: 
-					dot.node(tempDominio.contenido)
+					dot.node(tempLetra.contenido)
 				else:
 					tempLetra = self.primeraLetra
 					while tempLetra.abajo != None:
@@ -323,6 +377,7 @@ class matrizDispersa:
 						dot.edge(str(tempLetra.abajo.contenido),str(tempLetra.contenido))
 						dot.edge(str(tempLetra.contenido),str(tempLetra.abajo.contenido))
 						tempLetra = tempLetra.abajo
+				
 				Le12 = self.primeraLetra
 				while Le12 != None:
 					tempLetra = Le12.pContenido
@@ -337,20 +392,25 @@ class matrizDispersa:
 						dot.edge(str(tempLetra.siguiente.contenido),str(tempLetra.contenido))
 						tempLetra = tempLetra.siguiente
 					Le12 = Le12.abajo
-				Le13 = self.primeraLetra
-				while Le13 != None:
-					Le13c = Le13.pContenido
-					while Le13c.atras != None:
+				Le131 = self.primeraLetra
+				while Le131 != None:
+					Le13 = Le131.pContenido
+					while Le13 != None:
+						Le13c = Le13.pContenido
 						dot.node(Le13c.contenido)
 						dot.node(Le13c.atras.contenido)
 						dot.edge(str(Le13c.contenido),str(Le13c.atras.contenido))
 						dot.edge(str(Le13c.atras.contenido),str(Le13c.contenido))
-						Le13c = Le13c.atras
-					Le13 = Le13.abajo
-
-					dot.render('test-output/MatrizDispersa.dot', view=False)
+						while Le13c.atras != None:
+							dot.node(Le13c.contenido)
+							dot.node(Le13c.atras.contenido)
+							dot.edge(str(Le13c.contenido),str(Le13c.atras.contenido))
+							dot.edge(str(Le13c.atras.contenido),str(Le13c.contenido))
+							Le13c = Le13c.atras
+						Le13 = Le13.siguiente
+					Le131 = Le131.abajo	
+				dot.render('test-output/MatrizDispersa.dot', view=False)
 			return "Graficado"
-
 
 	def ingresarCorreo(self, correoR, dominioR, letraR, numeroR):
 		s = ""
@@ -723,6 +783,9 @@ class matrizDispersa:
 			s = s + "Letra: " + temp2.contenido + "\n"
 			temp2 = temp2.abajo
 		return s
+
+	
+
 			
 	
 

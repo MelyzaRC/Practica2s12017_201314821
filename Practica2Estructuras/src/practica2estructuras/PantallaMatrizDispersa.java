@@ -421,7 +421,7 @@ public class PantallaMatrizDispersa extends javax.swing.JFrame {
                 break;
             case "v":
                 numeroLe = "23";
-                break;
+                    break;
             case "w":
                 numeroLe = "24";
                 break;
