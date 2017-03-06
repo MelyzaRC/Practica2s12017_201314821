@@ -2,7 +2,8 @@ __author__ = "Melyza Rodriguez"
 
 from flask import Flask, request, Response
 app = Flask("EDD Lista Simple")
-
+import subprocess
+from graphviz import Digraph
 
 class Nodo:
 	def __init__(self, palabra):
@@ -82,6 +83,25 @@ class listaSimple:
 							contador = contador +1
 						return "Eliminacion exitosa"
 
+	def graficarListaSimple(self):
+		dot = Digraph(comment = 'GraficaLista')
+		dot
+		aux10 = self.primero
+		if aux10== None:
+			return "lista vacia"
+		else:
+			if aux10 == self.primero == self.ultimo:
+				dot.node(aux10.palabra)
+				dot.render('test-output/ListaSimple.dot', view=False)
+			else:
+				while aux10.siguiente != None:
+					dot.node(aux10.palabra)
+					dot.node(aux10.siguiente.palabra)
+					dot.edge(str(aux10.palabra),str(aux10.siguiente.palabra))
+					aux10 = aux10.siguiente
+					dot.render('test-output/ListaSimple.dot', view=False)
+			return "Graficado"
+
 	def buscar(self, criterio):
 		b1 = self.primero
 		cb1 = 0
@@ -113,6 +133,25 @@ class Cola:
 			return True
 		else:
 			return False
+
+	def graficarCola(self):
+		dot = Digraph(comment = 'GraficaCola')
+		dot
+		aux10 = self.primero
+		if aux10== None:
+			return "lista vacia"
+		else:
+			if aux10 == self.primero == self.ultimo:
+				dot.node(aux10.palabra)
+				dot.render('test-output/Cola.dot', view=False)
+			else:
+				while aux10.siguiente != None:
+					dot.node(aux10.palabra)
+					dot.node(aux10.siguiente.palabra)
+					dot.edge(str(aux10.palabra),str(aux10.siguiente.palabra))
+					aux10 = aux10.siguiente
+					dot.render('test-output/Cola.dot', view=False)
+			return "Graficado"
 
 	def agregar(self, dato):
    	 if self.vacia() == True:
@@ -156,6 +195,25 @@ class Pila:
 			return True
 		else:
 			return False
+
+	def graficarPila(self):
+		dot = Digraph(comment = 'GraficaPila')
+		dot
+		aux10 = self.ultimo
+		if aux10== None:
+			return "pila vacia"
+		else:
+			if aux10 == self.primero == self.ultimo:
+				dot.node(aux10.palabra)
+				dot.render('test-output/Pila.dot', view=False)
+			else:
+				while aux10.anterior != None:
+					dot.node(aux10.palabra)
+					dot.node(aux10.anterior.palabra)
+					dot.edge(str(aux10.palabra),str(aux10.anterior.palabra))
+					aux10 = aux10.anterior
+					dot.render('test-output/Pila.dot', view=False)
+			return "Graficado"
 
 	def agregar(self, dato):
    		if self.vacia() == True:
@@ -545,12 +603,38 @@ class matrizDispersa:
 				tempRL = tempRL.abajo
 		return s
 
+	def buscarLetra(self, num):
+		var = "Resultado de la búsqueda\n"
+		if str(num) != "":
+			temp1 = self.primerDominio
+			while temp1 != None:
+				temp2 = temp1.pContenido
+				while temp2 != None:
+					if str(temp2.numeroLetra) == str(num):
+						var = var + str(temp2.contenido) + "\n"
+						temp3 = temp2.pContenido
+						while temp3 != None:
+							var = var + str(temp3.contenido) + "\n"
+							temp3 = temp3.atras
+					temp2 = temp2.abajo
+				temp1 = temp1.siguiente
+		return var
 
+	def buscarDominio(self, dominioBuscar):
+		var = "Resultado de la búsqueda de: " + "@"+ str(dominioBuscar) + "\n"
+		busq = str(dominioBuscar)
+		if str(dominioBuscar) != "":
+			temp1 = self.primerDominio
+			while temp1 != None:
+				if str(temp1.contenido) == busq:			 
+					temp2 = temp1.pContenido
+					while temp2 != None:
+						var = var + temp2.contenido + "\n"
+						temp2 = temp2.atras
+				temp1 = temp1.siguiente
+		return var
 
-
-
-
-
+	
 
 
 
@@ -573,6 +657,17 @@ lis = listaSimple()
 co = Cola()
 pi = Pila()
 md = matrizDispersa()
+
+@app.route('/buscarDominio',methods=['POST']) 
+def buscarDom():
+	ret = str(md.buscarDominio(str(request.form['dominio'])))
+	return ret 
+
+
+@app.route('/buscarLetra',methods=['POST']) 
+def buscarLetra():
+	ret = str(md.buscarLetra(str(request.form['numeroLetra'])))
+	return ret 
 
 @app.route('/insertarMatrizDispersa',methods=['POST']) 
 def insertarMatrizDispersa():
@@ -604,7 +699,10 @@ def eliminarLista():
 def buscarLista():
 	return lis.buscar(request.form['busqueda'])
 
-
+@app.route('/graficarLista', methods=['POST'])
+def graficarLista():
+	v = lis.graficarListaSimple()
+	return v
 
 @app.route('/addCola', methods=['POST'])
 def addCola():
@@ -615,6 +713,10 @@ def recorrerCola():
 @app.route('/sacarCola', methods=['POST'])
 def sacarCola():
 	return co.sacar()
+@app.route('/graficarCola', methods=['POST'])
+def graficarCola():
+	v = co.graficarCola()
+	return v
 
 
 
@@ -627,6 +729,11 @@ def recorrerPila():
 @app.route('/sacarPila', methods=['POST'])
 def sacarPila():
 	return pi.sacar()
+
+@app.route('/graficarPila', methods=['POST'])
+def graficarPila():
+	v = pi.graficarPila()
+	return v
 
 
 if __name__ == "__main__":

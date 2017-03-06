@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
+import javax.swing.JOptionPane;
 import static practica2estructuras.PantallaCola.webClient;
 
 /**
@@ -45,7 +46,26 @@ public class PantallaPila extends javax.swing.JFrame {
             }
         });
     }
-
+public void imagen() {
+        try {
+            String dotPath = "C:\\release\\bin\\dot.exe";
+            String fileInputPath = "C:\\myproject\\app\\test-output\\Pila.dot";
+            String fileOutputPath = "C:\\myproject\\app\\test-output\\Pila.png";
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+            Runtime rt = Runtime.getRuntime();
+            rt.exec(cmd);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+        } finally {
+        }
+    }
     public String metodoWS(String metodo, RequestBody formBody) {
         try {
             URL url = new URL("http://localhost:5000/" + metodo);
@@ -92,6 +112,11 @@ public class PantallaPila extends javax.swing.JFrame {
         });
 
         jTextField1.setForeground(new java.awt.Color(255, 0, 102));
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setForeground(new java.awt.Color(255, 153, 0));
         jButton2.setText("pop");
@@ -157,14 +182,17 @@ public class PantallaPila extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String nombre = jTextField1.getText();
+          if (nombre.equals("")){
+        JOptionPane.showMessageDialog(this, "Debe ingresar un valor numérico", "Error", JOptionPane.INFORMATION_MESSAGE);    
+        }else{
         RequestBody formBody = new FormEncodingBuilder()
                 .add("valor", nombre)
                 .build();
         String r = metodoWS("addPila", formBody);
-        String x = metodoWS("recorrerPila", formBody);
         System.out.println(r);
-        System.out.println(x);
-        jTextField1.setText("");        // TODO add your handling code here:
+        jTextField1.setText(""); 
+        String y = metodoWS("graficarPila", formBody);
+        imagen();}// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -173,11 +201,15 @@ public class PantallaPila extends javax.swing.JFrame {
                 .add("valor", "no aplica")
                 .build();
         String r = metodoWS("sacarPila", formBody);
-        String x = metodoWS("recorrerPila", formBody);
         System.out.println(r);
-        System.out.println(x);
-        jTextField1.setText("");        // TODO add your handling code here:
+        jTextField1.setText("");     
+        String y = metodoWS("graficarPila", formBody);
+        imagen();// TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments

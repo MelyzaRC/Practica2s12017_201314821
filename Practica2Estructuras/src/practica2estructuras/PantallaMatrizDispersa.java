@@ -127,6 +127,11 @@ public class PantallaMatrizDispersa extends javax.swing.JFrame {
 
         jButton5.setForeground(new java.awt.Color(255, 102, 102));
         jButton5.setText("Buscar Dominio");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -199,7 +204,101 @@ public class PantallaMatrizDispersa extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        String letra = jTextField3.getText();
+        String numeroLe = "";
+        switch (letra.toLowerCase()) {
+            case "a":
+                numeroLe = "1";
+                break;
+            case "b":
+                numeroLe = "2";
+                break;
+            case "c":
+                numeroLe = "3";
+                break;
+            case "d":
+                numeroLe = "4";
+                break;
+            case "e":
+                numeroLe = "5";
+                break;
+            case "f":
+                numeroLe = "6";
+                break;
+            case "g":
+                numeroLe = "7";
+                break;
+            case "h":
+                numeroLe = "8";
+                break;
+            case "i":
+                numeroLe = "9";
+                break;
+            case "j":
+                numeroLe = "10";
+                break;
+            case "k":
+                numeroLe = "11";
+                break;
+            case "l":
+                numeroLe = "12";
+                break;
+            case "m":
+                numeroLe = "13";
+                break;
+            case "n":
+                numeroLe = "14";
+                break;
+            case "ñ":
+                numeroLe = "15";
+                break;
+            case "o":
+                numeroLe = "16";
+                break;
+            case "p":
+                numeroLe = "17";
+                break;
+            case "q":
+                numeroLe = "18";
+                break;
+            case "r":
+                numeroLe = "19";
+                break;
+            case "s":
+                numeroLe = "20";
+                break;
+            case "t":
+                numeroLe = "21";
+                break;
+            case "u":
+                numeroLe = "22";
+                break;
+            case "v":
+                numeroLe = "23";
+                break;
+            case "w":
+                numeroLe = "24";
+                break;
+            case "x":
+                numeroLe = "25";
+                break;
+            case "y":
+                numeroLe = "26";
+                break;
+            case "z":
+                numeroLe = "27";
+                break;
+        }
+
+        RequestBody formBody = new FormEncodingBuilder()
+                .add("correo", "")
+                .add("dominio", "")
+                .add("letra", "")
+                .add("numeroLetra", numeroLe)
+                .build();
+        String r1 = metodoWS("buscarLetra", formBody);
+        System.out.println(r1);
+        jTextField3.setText("");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -210,9 +309,9 @@ public class PantallaMatrizDispersa extends javax.swing.JFrame {
         String nombre = "";
         String dominio = "";
         String letra = "";
-        String numeroLe = ""; 
+        String numeroLe = "";
         int contadorArroba = 0;
-        String correo = jTextField1.getText();
+        String correo = jTextField1.getText().toLowerCase();
 
         for (int i = 0; i < correo.length() - 1; i++) {
             char c = correo.charAt(i);
@@ -346,6 +445,19 @@ public class PantallaMatrizDispersa extends javax.swing.JFrame {
         String r1 = metodoWS("recorrerMatrizDispersa", formBody);
         System.out.println(r1);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        String dom = jTextField4.getText().toLowerCase();
+        RequestBody formBody = new FormEncodingBuilder()
+                .add("correo", "")
+                .add("dominio", dom)
+                .add("letra", "")
+                .add("numeroLetra", "0")
+                .build();
+        String r1 = metodoWS("buscarDominio", formBody);
+        System.out.println(r1);
+        jTextField4.setText("");
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

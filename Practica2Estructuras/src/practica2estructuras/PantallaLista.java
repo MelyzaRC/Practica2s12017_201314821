@@ -65,6 +65,28 @@ public class PantallaLista extends javax.swing.JFrame {
         }
         return null;
     }
+    
+    
+    public void imagen(){
+     try {
+            String dotPath = "C:\\release\\bin\\dot.exe";
+            String fileInputPath = "C:\\myproject\\app\\test-output\\ListaSimple.dot";
+            String fileOutputPath = "C:\\myproject\\app\\test-output\\ListaSimple.png";
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+            Runtime rt = Runtime.getRuntime();
+            rt.exec(cmd);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+        } finally {
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -198,9 +220,10 @@ public class PantallaLista extends javax.swing.JFrame {
                 .add("palabra", nombre)
                 .build();
         String r = metodoWS("insertarLista", formBody);
-        String x = metodoWS("recorrerLista", formBody);
+        String x = metodoWS("graficarLista", formBody);
         System.out.println(r);
-        System.out.println(x);
+        //System.out.println(x);
+        imagen();
         jTextField1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -212,10 +235,8 @@ public class PantallaLista extends javax.swing.JFrame {
                 .add("busqueda", criterio)
                 .build();
         String r = metodoWS("buscarLista", formBody);
-        String x = metodoWS("recorrerLista", formBody);
         System.out.println(r);
         jTextField3.setText("");
-        System.out.println(x);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -225,10 +246,10 @@ public class PantallaLista extends javax.swing.JFrame {
                 .add("eliminacion", jTextField2.getText())
                 .build();
         String r = metodoWS("eliminarLista", formBody);
-        String x = metodoWS("recorrerLista", formBody);
         System.out.println(r);
         jTextField2.setText("");
-        System.out.println(x);
+        String y = metodoWS("graficarLista", formBody);
+        imagen();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
